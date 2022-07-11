@@ -30,4 +30,6 @@ private:
 
 public:
 	MainWindow();
+	wxDECLARE_EVENT_TABLE();
+	void OnButtonClick(wxCommandEvent& evt);
 };
