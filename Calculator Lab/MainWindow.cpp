@@ -1,5 +1,33 @@
 #include "MainWindow.h"
 
+wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
+
+
+EVT_BUTTON(996, MainWindow::OnButtonClick)
+EVT_BUTTON(997, MainWindow::OnButtonClick)
+EVT_BUTTON(998, MainWindow::OnButtonClick)
+EVT_BUTTON(999, MainWindow::OnButtonClick)
+EVT_BUTTON(1000, MainWindow::OnButtonClick)
+EVT_BUTTON(1001, MainWindow::OnButtonClick)
+EVT_BUTTON(1002, MainWindow::OnButtonClick)
+EVT_BUTTON(1003, MainWindow::OnButtonClick)
+EVT_BUTTON(1004, MainWindow::OnButtonClick)
+EVT_BUTTON(1005, MainWindow::OnButtonClick)
+EVT_BUTTON(1006, MainWindow::OnButtonClick)
+EVT_BUTTON(1007, MainWindow::OnButtonClick)
+EVT_BUTTON(1008, MainWindow::OnButtonClick)
+EVT_BUTTON(1009, MainWindow::OnButtonClick)
+EVT_BUTTON(1010, MainWindow::OnButtonClick)
+EVT_BUTTON(1011, MainWindow::OnButtonClick)
+EVT_BUTTON(1012, MainWindow::OnButtonClick)
+EVT_BUTTON(1013, MainWindow::OnButtonClick)
+EVT_BUTTON(1014, MainWindow::OnButtonClick)
+EVT_BUTTON(1015, MainWindow::OnButtonClick)
+EVT_BUTTON(1016, MainWindow::OnButtonClick)
+EVT_BUTTON(1017, MainWindow::OnButtonClick)
+
+wxEND_EVENT_TABLE()
+
 MainWindow::MainWindow() : wxFrame(nullptr, wxID_ANY, "Buttons", wxPoint(200, 50), wxSize(417, 540))
 {
 	textBox = new wxTextCtrl(this, 996, "", wxPoint(25, 15), wxSize(350, 25));
@@ -26,5 +54,35 @@ MainWindow::MainWindow() : wxFrame(nullptr, wxID_ANY, "Buttons", wxPoint(200, 50
 	buttonDivide = new wxButton(this, 1015, "/", wxPoint(300, 295), wxSize(100, 65));
 	buttonModulo = new wxButton(this, 1016, "%", wxPoint(300, 360), wxSize(100, 65));
 	buttonPlusOrMinus = new wxButton(this, 1017, "+/-", wxPoint(300, 425), wxSize(100, 75));
+
+}
+
+void MainWindow::OnButtonClick(wxCommandEvent& evt)
+{
+	wxObject* e = evt.GetEventObject();
+	wxButton* b = (dynamic_cast <wxButton*>(e));
+	wxString c = b->GetLabel();
+
+
+	if (evt.GetId() != 1017 && evt.GetId() != 997 && evt.GetId() != 998 && evt.GetId() != 999)
+		textBox->AppendText(c);
+
+	//Logic for toggling negative or positive
+	if (c == "+/-" && textBox->GetRange(0, 1) != "")
+		if (textBox->GetRange(0, 1) == "-")
+		{
+			textBox->Remove(0, 1);
+		}
+		else
+		{
+			wxTextCtrl* temp = new wxTextCtrl(this, 996, "", wxPoint(25, 15), wxSize(350, 25));
+			temp->AppendText("-");
+			temp->AppendText(textBox->GetRange(0, textBox->GetLastPosition()));
+			textBox->Clear();
+			textBox->AppendText(temp->GetRange(0, temp->GetLastPosition()));
+		}
+
+	if (evt.GetId() == 1010)
+		textBox->Clear();
 
 }
