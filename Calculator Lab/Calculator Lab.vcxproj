@@ -143,10 +143,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonFactory.h" />
     <ClInclude Include="CalculatorMain.h" />
     <ClInclude Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonFactory.cpp" />
     <ClCompile Include="CalculatorMain.cpp" />
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
