@@ -65,7 +65,6 @@ void MainWindow::OnButtonClick(wxCommandEvent& evt)
 	wxButton* b = (dynamic_cast <wxButton*>(e));
 	wxString c = b->GetLabel();
 
-
 	if (evt.GetId() != 1017 && evt.GetId() != 997 && evt.GetId() != 998 && evt.GetId() != 999)
 		textBox->AppendText(c);
 
