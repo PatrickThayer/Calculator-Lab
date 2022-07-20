@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "IBaseCommand.h"
 
-class CalculatorProcessor
+class CalculatorProcessor : public IBaseCommand
 {
 private:
 	static CalculatorProcessor* _processor;
@@ -19,6 +20,10 @@ public:
 		}
 
 		return _processor;
+	}
+
+	void Execute() {
+
 	}
 
 	void SetBaseNumber(int number) {

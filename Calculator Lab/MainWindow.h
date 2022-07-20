@@ -1,7 +1,5 @@
 #pragma once
 #include "wx/wx.h"
-#include "ButtonFactory.h"
-#include "CalculatorProcessor.h"
 
 class MainWindow : public wxFrame
 {
@@ -29,6 +27,7 @@ private:
 	wxButton* buttonPlusOrMinus = nullptr;
 
 	wxTextCtrl* textBox = nullptr;
+	wxTextCtrl* numberConverter = nullptr;
 
 public:
 	MainWindow();

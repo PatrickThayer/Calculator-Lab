@@ -1,8 +1,11 @@
 #include "MainWindow.h"
+#include "ButtonFactory.h"
+#include "CalculatorProcessor.h"
 
 wxBEGIN_EVENT_TABLE(MainWindow, wxFrame)
 
 
+EVT_BUTTON(995, MainWindow::OnButtonClick)
 EVT_BUTTON(996, MainWindow::OnButtonClick)
 EVT_BUTTON(997, MainWindow::OnButtonClick)
 EVT_BUTTON(998, MainWindow::OnButtonClick)
@@ -32,44 +35,49 @@ MainWindow::MainWindow() : wxFrame(nullptr, wxID_ANY, "Buttons", wxPoint(200, 50
 {
 	ButtonFactory bf;
 
-	textBox = bf.GetTextBox(this);
+	bf._parent = this;
 
-	buttonBin = bf.GetButtonBin(this);
-	buttonHex = bf.GetButtonHex(this);
-	buttonDec = bf.GetButtonDec(this);
+	textBox = bf.GetTextBox();
+	numberConverter = bf.GetNumberConverter();
 
-	button0 = bf.GetButton0(this);
-	button1 = bf.GetButton1(this);
-	button2 = bf.GetButton2(this);
-	button3 = bf.GetButton3(this);
-	button4 = bf.GetButton4(this);
-	button5 = bf.GetButton5(this);
-	button6 = bf.GetButton6(this);
-	button7 = bf.GetButton7(this);
-	button8 = bf.GetButton8(this);
-	button9 = bf.GetButton9(this);
-	buttonClear = bf.GetButtonClear(this);
-	buttonEquals = bf.GetButtonEquals(this);
-	buttonPlus = bf.GetButtonPlus(this);
-	buttonMinus = bf.GetButtonMinus(this);
-	buttonTimes = bf.GetButtonTimes(this);
-	buttonDivide = bf.GetButtonDivide(this);
-	buttonModulo = bf.GetButtonModulo(this);
-	buttonPlusOrMinus = bf.GetButtonPlusOrMinus(this);
+	buttonBin = bf.GetButtonBin();
+	buttonHex = bf.GetButtonHex();
+	buttonDec = bf.GetButtonDec();
+
+	button0 = bf.GetButton0();
+	button1 = bf.GetButton1();
+	button2 = bf.GetButton2();
+	button3 = bf.GetButton3();
+	button4 = bf.GetButton4();
+	button5 = bf.GetButton5();
+	button6 = bf.GetButton6();
+	button7 = bf.GetButton7();
+	button8 = bf.GetButton8();
+	button9 = bf.GetButton9();
+	buttonClear = bf.GetButtonClear();
+	buttonEquals = bf.GetButtonEquals();
+	buttonPlus = bf.GetButtonPlus();
+	buttonMinus = bf.GetButtonMinus();
+	buttonTimes = bf.GetButtonTimes();
+	buttonDivide = bf.GetButtonDivide();
+	buttonModulo = bf.GetButtonModulo();
+	buttonPlusOrMinus = bf.GetButtonPlusOrMinus();
 
 }
 
 void MainWindow::OnButtonClick(wxCommandEvent& evt)
 {
 	wxObject* e = evt.GetEventObject();
-	wxButton* b = (dynamic_cast <wxButton*>(e));
-	wxString c = b->GetLabel();
+	wxButton* button = (dynamic_cast <wxButton*>(e));
+	wxString label = button->GetLabel();
 
-	if (evt.GetId() != 1017 && evt.GetId() != 997 && evt.GetId() != 998 && evt.GetId() != 999)
-		textBox->AppendText(c);
+	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
+
+	if (evt.GetId() > 999 && evt.GetId() < 1010)
+		textBox->AppendText(label);
 
 	//Logic for toggling negative or positive
-	if (c == "+/-" && textBox->GetRange(0, 1) != "")
+	if (label == "+/-" && textBox->GetRange(0, 1) != "")
 		if (textBox->GetRange(0, 1) == "-")
 		{
 			textBox->Remove(0, 1);
@@ -83,7 +91,32 @@ void MainWindow::OnButtonClick(wxCommandEvent& evt)
 			textBox->AppendText(temp->GetRange(0, temp->GetLastPosition()));
 		}
 
-	if (evt.GetId() == 1010)
-		textBox->Clear();
+	if (evt.GetId() == 997) {
+		numberConverter->Clear();
+		wxString input = textBox->GetValue();
+		processor->SetBaseNumber(wxAtoi(input));
+		wxString binary(processor->GetBinary());
+		numberConverter->AppendText(binary);
+	}
+	if (evt.GetId() == 998) {
+		numberConverter->Clear();
+		wxString input = textBox->GetValue();
+		processor->SetBaseNumber(wxAtoi(input));
+		wxString binary(processor->GetHexadecimal());
+		numberConverter->AppendText(binary);
+	}
+	if (evt.GetId() == 999) {
+		numberConverter->Clear();
+		wxString input = textBox->GetValue();
+		processor->SetBaseNumber(wxAtoi(input));
+		wxString binary(processor->GetDecimal());
+		numberConverter->AppendText(binary);
+	}
 
+	if (evt.GetId() == 1010) {
+
+		numberConverter->Clear();
+		textBox->Clear();
+	}
 }
+
